@@ -32,7 +32,7 @@ addBtn.addEventListener("click", () => {
 				`
 
 	const imageUrlDOM = document.querySelector("#imageUrl")
-	console.log(imageUrlDOM)
+	// console.log(imageUrlDOM)
 
 	imageUrlDOM.addEventListener("input", () => {
 		const imagePreview = document.querySelector(".img-preview")
@@ -45,6 +45,7 @@ addBtn.addEventListener("click", () => {
 			const newValue = formulaire.title.value
 			const newImage = formulaire.imageUrl.value
 			e.preventDefault()
+			postNewBook(newValue, newImage)
 			console.log(newValue, newImage)
 		})
 	})
@@ -192,7 +193,7 @@ const postData = (newTitle, newImageUrl, bookId) => {
 			const selectedCard = document.getElementById(`${bookId}`)
 			fetch(url).then((res) => {
 				res.json().then((data) => {
-					selectedCard.children[0].src = data.imageUrl    
+					selectedCard.children[0].src = data.imageUrl
 					selectedCard.children[1].children[0].textContent = data.title
 				})
 			})
@@ -206,6 +207,29 @@ const postData = (newTitle, newImageUrl, bookId) => {
 			console.error("Error:", error)
 			// Handle any errors
 		})
+}
+
+/*  add new book  */
+const postNewBook = (newValue, newImage) => {
+	/*  POST FETCH  */
+	const url = `https://basic-rest-flask.martinpedraza.repl.co/api/books`
+
+	const data = {
+		title: newValue,
+		imageUrl: newImage,
+	}
+
+	const options = {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify(data),
+	}
+
+	fetch(url, options).then((response) => {
+		console.log(response.json())
+	})
 }
 
 appInit()
