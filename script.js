@@ -192,7 +192,7 @@ const postData = (newTitle, newImageUrl, bookId) => {
 			const selectedCard = document.getElementById(`${bookId}`)
 			fetch(url).then((res) => {
 				res.json().then((data) => {
-					selectedCard.children[0].src = data.imageUrl
+					selectedCard.children[0].src = data.imageUrl    
 					selectedCard.children[1].children[0].textContent = data.title
 				})
 			})
